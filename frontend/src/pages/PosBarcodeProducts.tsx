@@ -31,7 +31,7 @@ export const PosBarcodeProducts = () => {
     return selectedCategories.includes(value);
   });
 
-  const PosProductCard = ({ product }: { product: any }) => {
+  const PosProductCard = ({ product }: { product: any; key?: any }) => {
     const svgRef = useRef<SVGSVGElement | null>(null);
     const barcodeValue = product.sku || product.barcodeValue || product._id || product.id || '';
     useEffect(() => {

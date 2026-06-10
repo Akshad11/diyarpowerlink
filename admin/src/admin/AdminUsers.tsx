@@ -18,7 +18,7 @@ export const AdminUsers = () => {
     setError('');
     setSaveState('saving');
     try {
-      const payload = { name: form.name, email: form.email, role: form.role };
+      const payload: any = { name: form.name, email: form.email, role: form.role };
       if (form.password) payload.password = form.password;
       if (editingId) await api.update('admin-users', editingId, payload);
       else await api.create('admin-users', payload);
