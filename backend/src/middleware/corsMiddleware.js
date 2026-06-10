@@ -1,0 +1,57 @@
+const rawOrigins = process.env.CORS_ORIGINS || '';
+const allowedOrigins = rawOrigins
+  .split(',')
+  .map((value) => value.trim())
+  .filter(Boolean);
+const defaultAllowed = [
+  'https://www.diyarpowerlink.com',
+  'https://diyarpowerlink.com',
+  'https://admin.diyarpowerlink.com'
+];
+for (const origin of defaultAllowed) {
+  if (!allowedOrigins.includes(origin)) allowedOrigins.push(origin);
+}
+const defaultAllowedPatterns = ['https://*.diyarpowerlink.com'];
+for (const pattern of defaultAllowedPatterns) {
+  if (!allowedOrigins.includes(pattern)) allowedOrigins.push(pattern);
+}
+
+const escapeRegex = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const originMatchesPattern = (origin, pattern) => {
+  if (pattern === '*') return true;
+  if (!pattern.includes('*')) return origin === pattern;
+  const regex = new RegExp(`^${pattern.split('*').map(escapeRegex).join('.*')}$`);
+  return regex.test(origin);
+};
+
+const isOriginAllowed = (origin) => {
+  if (allowedOrigins.length === 0) return true;
+  return allowedOrigins.some((pattern) => originMatchesPattern(origin, pattern));
+};
+
+export const corsHeadersMiddleware = (req, res, next) => {
+  const origin = req.headers.origin;
+  if (origin && isOriginAllowed(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Vary', 'Origin');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+  }
+  if (req.method === 'OPTIONS') {
+    res.setHeader(
+      'Access-Control-Allow-Headers',
+      'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+    );
+    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS');
+  }
+  next();
+};
+
+export const corsOptions = {
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
+    if (isOriginAllowed(origin)) return callback(null, true);
+    return callback(new Error('Not allowed by CORS'));
+  },
+  credentials: true,
+  optionsSuccessStatus: 204
+};

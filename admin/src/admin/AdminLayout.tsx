@@ -32,7 +32,7 @@ export const AdminLayout = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 flex">
-      <aside className="w-64 bg-white border-r border-slate-200 p-6 hidden lg:block shadow-lg shadow-slate-200/40">
+      <aside className="w-64 h-screen sticky top-0 overflow-y-auto overscroll-contain bg-white border-r border-slate-200 p-6 hidden lg:block shadow-lg shadow-slate-200/40">
         <div className="text-lg font-bold text-slate-900 mb-8">Admin Panel</div>
         <nav className="space-y-2">
           <Link
@@ -107,6 +107,159 @@ export const AdminLayout = () => {
           >
             Settings
           </Link>
+          <div className="pt-4 mt-4 border-t border-slate-100 space-y-1">
+            <span className="px-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Sales & CRM</span>
+            <Link
+              to="/crm"
+              className={`block px-4 py-2 rounded-xl text-sm font-semibold ${location.pathname === '/crm'
+                ? 'bg-blue-600 text-white'
+                : 'text-slate-600 hover:bg-slate-100'
+                }`}
+            >
+              CRM Dashboard
+            </Link>
+            <Link
+              to="/crm/customers"
+              className={`block px-4 py-2 rounded-xl text-sm font-semibold ${location.pathname === '/crm/customers'
+                ? 'bg-blue-600 text-white'
+                : 'text-slate-600 hover:bg-slate-100'
+                }`}
+            >
+              Customer Master
+            </Link>
+            <Link
+              to="/crm/items"
+              className={`block px-4 py-2 rounded-xl text-sm font-semibold ${location.pathname === '/crm/items'
+                ? 'bg-blue-600 text-white'
+                : 'text-slate-600 hover:bg-slate-100'
+                }`}
+            >
+              Item Master
+            </Link>
+            <Link
+              to="/crm/quotations"
+              className={`block px-4 py-2 rounded-xl text-sm font-semibold ${location.pathname.startsWith('/crm/quotations')
+                ? 'bg-blue-600 text-white'
+                : 'text-slate-600 hover:bg-slate-100'
+                }`}
+            >
+              Quotations
+            </Link>
+            <Link
+              to="/crm/sales-orders"
+              className={`block px-4 py-2 rounded-xl text-sm font-semibold ${location.pathname.startsWith('/crm/sales-orders')
+                ? 'bg-blue-600 text-white'
+                : 'text-slate-600 hover:bg-slate-100'
+                }`}
+            >
+              Sales Orders
+            </Link>
+            <Link
+              to="/crm/invoices"
+              className={`block px-4 py-2 rounded-xl text-sm font-semibold ${location.pathname.startsWith('/crm/invoices')
+                ? 'bg-blue-600 text-white'
+                : 'text-slate-600 hover:bg-slate-100'
+                }`}
+            >
+              Invoices
+            </Link>
+            <Link
+              to="/crm/uoms-taxes"
+              className={`block px-4 py-2 rounded-xl text-sm font-semibold ${location.pathname === '/crm/uoms-taxes'
+                ? 'bg-blue-600 text-white'
+                : 'text-slate-600 hover:bg-slate-100'
+                }`}
+            >
+              UOMs & Taxes
+            </Link>
+          </div>
+          <div className="pt-4 mt-4 border-t border-slate-100 space-y-1">
+            <span className="px-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Procurement & Purchase</span>
+            <Link
+              to="/procurement"
+              className={`block px-4 py-2 rounded-xl text-sm font-semibold ${location.pathname === '/procurement'
+                ? 'bg-indigo-600 text-white'
+                : 'text-slate-600 hover:bg-slate-100'
+                }`}
+            >
+              Procurement Dashboard
+            </Link>
+            <Link
+              to="/procurement/suppliers"
+              className={`block px-4 py-2 rounded-xl text-sm font-semibold ${location.pathname.startsWith('/procurement/suppliers')
+                ? 'bg-indigo-600 text-white'
+                : 'text-slate-600 hover:bg-slate-100'
+                }`}
+            >
+              Supplier Master
+            </Link>
+            <Link
+              to="/procurement/inquiries"
+              className={`block px-4 py-2 rounded-xl text-sm font-semibold ${location.pathname.startsWith('/procurement/inquiries')
+                ? 'bg-indigo-600 text-white'
+                : 'text-slate-600 hover:bg-slate-100'
+                }`}
+            >
+              Purchase Inquiries
+            </Link>
+            <Link
+              to="/procurement/rfqs"
+              className={`block px-4 py-2 rounded-xl text-sm font-semibold ${location.pathname.startsWith('/procurement/rfqs')
+                ? 'bg-indigo-600 text-white'
+                : 'text-slate-600 hover:bg-slate-100'
+                }`}
+            >
+              RFQs (Request Quote)
+            </Link>
+            <Link
+              to="/procurement/supplier-quotations"
+              className={`block px-4 py-2 rounded-xl text-sm font-semibold ${location.pathname.startsWith('/procurement/supplier-quotations')
+                ? 'bg-indigo-600 text-white'
+                : 'text-slate-600 hover:bg-slate-100'
+                }`}
+            >
+              Supplier Quotes
+            </Link>
+            <Link
+              to="/procurement/purchase-orders"
+              className={`block px-4 py-2 rounded-xl text-sm font-semibold ${location.pathname.startsWith('/procurement/purchase-orders')
+                ? 'bg-indigo-600 text-white'
+                : 'text-slate-600 hover:bg-slate-100'
+                }`}
+            >
+              Purchase Orders (PO)
+            </Link>
+          </div>
+          <div className="pt-4 mt-4 border-t border-slate-100 space-y-1">
+            <span className="px-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Inventory & Finance</span>
+            <Link
+              to="/inventory"
+              className={`block px-4 py-2 rounded-xl text-sm font-semibold ${location.pathname.startsWith('/inventory')
+                ? 'bg-emerald-600 text-white'
+                : 'text-slate-600 hover:bg-slate-100'
+                }`}
+            >
+              Inventory Management
+            </Link>
+            <Link
+              to="/reports"
+              className={`block px-4 py-2 rounded-xl text-sm font-semibold ${location.pathname === '/reports'
+                ? 'bg-blue-600 text-white'
+                : 'text-slate-600 hover:bg-slate-100'
+                }`}
+            >
+              Analytics & Reports
+            </Link>
+            <Link
+              to="/currencies"
+              className={`block px-4 py-2 rounded-xl text-sm font-semibold ${location.pathname === '/currencies'
+                ? 'bg-purple-600 text-white'
+                : 'text-slate-600 hover:bg-slate-100'
+                }`}
+            >
+              Exchange Rates
+            </Link>
+          </div>
         </nav>
         <button
           onClick={onLogout}

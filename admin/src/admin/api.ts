@@ -1,4 +1,4 @@
-﻿import { API_BASE } from '../api';
+import { API_BASE } from '../api';
 
 const base = API_BASE || '';
 
@@ -66,5 +66,40 @@ export const api = {
   seedDefaults: () => fetch(`${base}/api/admin/seed-defaults`, {
     method: 'POST',
     headers: authHeaders()
-  }).then(r => r.json())
+  }).then(r => r.json()),
+  crmDashboardSummary: async () => {
+    const res = await fetch(`${base}/api/crm/dashboard-summary`, {
+      headers: authHeaders(),
+      cache: 'no-store'
+    });
+    if (res.status === 304 || res.status === 204) return {};
+    if (!res.ok) throw new Error('Request failed');
+    return res.json();
+  },
+  procurementDashboardSummary: async () => {
+    const res = await fetch(`${base}/api/procurement/dashboard-summary`, {
+      headers: authHeaders(),
+      cache: 'no-store'
+    });
+    if (res.status === 304 || res.status === 204) return {};
+    if (!res.ok) throw new Error('Request failed');
+    return res.json();
+  },
+  sendCrmEmail: async (data: { to: string; subject: string; body: string; pdfBase64?: string; filename?: string }) => {
+    const res = await fetch(`${base}/api/crm/send-email`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...authHeaders() },
+      body: JSON.stringify(data)
+    });
+    if (!res.ok) throw new Error('Failed to send email');
+    return res.json();
+  },
+  reportsSummary: async () => {
+    const res = await fetch(`${base}/api/reports/summary`, {
+      headers: authHeaders(),
+      cache: 'no-store'
+    });
+    if (!res.ok) throw new Error('Request failed');
+    return res.json();
+  }
 };
