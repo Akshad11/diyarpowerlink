@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { api } from './api';
+import { API_BASE } from '../api';
 
 export const AdminLogin = () => {
   const [email, setEmail] = useState('');
@@ -24,6 +25,11 @@ export const AdminLogin = () => {
       <div className="bg-white border border-slate-200 rounded-3xl p-8 max-w-md w-full shadow-sm">
         <h1 className="text-2xl font-bold text-slate-900 mb-2">Admin Login</h1>
         <p className="text-sm text-slate-500 mb-6">Sign in to manage website content.</p>
+        {!API_BASE && import.meta.env.PROD && (
+          <div className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-xl p-3 mb-4 font-medium leading-relaxed">
+            ⚠️ <strong>Configuration Missing:</strong> The backend API URL (<code>VITE_API_URL</code>) is not set in your Vercel project environment variables. Live API requests will fail.
+          </div>
+        )}
         {error && <div className="text-sm text-red-600 mb-4">{error}</div>}
         <form onSubmit={submit} className="space-y-4">
           <div>
