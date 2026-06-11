@@ -14,7 +14,12 @@ export const api = {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })
     });
-    if (!res.ok) throw new Error('Invalid credentials');
+    if (!res.ok) {
+      if (res.status === 401 || res.status === 400) {
+        throw new Error('Invalid email or password');
+      }
+      throw new Error(`Server error (${res.status}): Please check your backend connection.`);
+    }
     return res.json();
   },
   summary: async () => {

@@ -17,10 +17,14 @@ export const AdminLayout = () => {
       headers: { Authorization: `Bearer ${token}` }
     }).then((res) => {
       if (!res.ok) {
-        localStorage.removeItem('admin_token');
-        navigate(loginPath, { replace: true });
+        console.error(`Session verification failed fetching ${API_BASE}/api/dashboard/summary: Status ${res.status} ${res.statusText}`);
+        if (res.status === 401 || res.status === 403) {
+          localStorage.removeItem('admin_token');
+          navigate(loginPath, { replace: true });
+        }
       }
-    }).catch(() => {
+    }).catch((err) => {
+      console.error(`Session verification network error fetching ${API_BASE}/api/dashboard/summary:`, err);
       // If backend is down, keep user here so they can start it
     });
   }, [navigate, loginPath]);
