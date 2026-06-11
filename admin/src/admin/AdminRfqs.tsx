@@ -323,10 +323,13 @@ export const AdminRfqs = () => {
     }
   };
 
-  const filtered = rfqs.filter(r =>
-    r.rfqNumber.toLowerCase().includes(search.toLowerCase()) ||
-    (r.inquiry?.inquiryNumber || '').toLowerCase().includes(search.toLowerCase())
-  );
+  const filtered = rfqs.filter(r => {
+    if (!r) return false;
+    return (
+      (r.rfqNumber || '').toLowerCase().includes(search.toLowerCase()) ||
+      (r.inquiry?.inquiryNumber || '').toLowerCase().includes(search.toLowerCase())
+    );
+  });
 
   return (
     <div className="space-y-6">

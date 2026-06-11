@@ -470,10 +470,13 @@ export const AdminQuotations = () => {
     }
   };
 
-  const filtered = quotations.filter(q =>
-    q.quotationNumber.toLowerCase().includes(search.toLowerCase()) ||
-    q.customer.name.toLowerCase().includes(search.toLowerCase())
-  );
+  const filtered = quotations.filter(q => {
+    if (!q) return false;
+    return (
+      (q.quotationNumber || '').toLowerCase().includes(search.toLowerCase()) ||
+      (q.customer?.name || '').toLowerCase().includes(search.toLowerCase())
+    );
+  });
 
   return (
     <div className="space-y-6">

@@ -226,10 +226,13 @@ export const AdminInquiries = () => {
     }
   };
 
-  const filtered = inquiries.filter(i =>
-    i.inquiryNumber.toLowerCase().includes(search.toLowerCase()) ||
-    (i.requestedBy || '').toLowerCase().includes(search.toLowerCase())
-  );
+  const filtered = inquiries.filter(i => {
+    if (!i) return false;
+    return (
+      (i.inquiryNumber || '').toLowerCase().includes(search.toLowerCase()) ||
+      (i.requestedBy || '').toLowerCase().includes(search.toLowerCase())
+    );
+  });
 
   return (
     <div className="space-y-6">
