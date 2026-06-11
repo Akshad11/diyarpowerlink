@@ -26,7 +26,11 @@ const originMatchesPattern = (origin, pattern) => {
 
 const isOriginAllowed = (origin) => {
   if (allowedOrigins.length === 0) return true;
-  return allowedOrigins.some((pattern) => originMatchesPattern(origin, pattern));
+  const allowed = allowedOrigins.some((pattern) => originMatchesPattern(origin, pattern));
+  if (origin && !allowed) {
+    console.warn(`[CORS] Blocked request from origin: ${origin}. Allowed origins:`, allowedOrigins);
+  }
+  return allowed;
 };
 
 export const corsHeadersMiddleware = (req, res, next) => {

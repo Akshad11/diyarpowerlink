@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { api } from './api';
 
 export const AdminLogin = () => {
@@ -13,8 +13,9 @@ export const AdminLogin = () => {
       const res = await api.login(email, password);
       localStorage.setItem('admin_token', res.token);
       window.location.href = '/';
-    } catch (err) {
-      setError('Invalid credentials');
+    } catch (err: any) {
+      console.error('Login error:', err);
+      setError(err.message || 'Failed to connect to the server');
     }
   };
 
