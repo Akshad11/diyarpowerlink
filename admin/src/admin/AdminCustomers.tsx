@@ -135,12 +135,15 @@ export const AdminCustomers = () => {
     }
   };
 
-  const filtered = customers.filter(c => 
-    c.name.toLowerCase().includes(search.toLowerCase()) ||
-    (c.email || '').toLowerCase().includes(search.toLowerCase()) ||
-    (c.phone || '').includes(search) ||
-    (c.gstPan || '').toLowerCase().includes(search.toLowerCase())
-  );
+  const filtered = customers.filter(c => {
+    if (!c) return false;
+    return (
+      (c.name || '').toLowerCase().includes(search.toLowerCase()) ||
+      (c.email || '').toLowerCase().includes(search.toLowerCase()) ||
+      (c.phone || '').includes(search) ||
+      (c.gstPan || '').toLowerCase().includes(search.toLowerCase())
+    );
+  });
 
   return (
     <div className="space-y-6">

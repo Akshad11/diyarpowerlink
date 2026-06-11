@@ -129,11 +129,14 @@ export const AdminItems = () => {
     }
   };
 
-  const filtered = items.filter(i => 
-    i.name.toLowerCase().includes(search.toLowerCase()) ||
-    i.sku.toLowerCase().includes(search.toLowerCase()) ||
-    (i.description || '').toLowerCase().includes(search.toLowerCase())
-  );
+  const filtered = items.filter(i => {
+    if (!i) return false;
+    return (
+      (i.name || '').toLowerCase().includes(search.toLowerCase()) ||
+      (i.sku || '').toLowerCase().includes(search.toLowerCase()) ||
+      (i.description || '').toLowerCase().includes(search.toLowerCase())
+    );
+  });
 
   return (
     <div className="space-y-6">

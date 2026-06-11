@@ -215,10 +215,13 @@ export const AdminInvoices = () => {
     }
   };
 
-  const filtered = invoices.filter(i =>
-    i.invoiceNumber.toLowerCase().includes(search.toLowerCase()) ||
-    i.customer.name.toLowerCase().includes(search.toLowerCase())
-  );
+  const filtered = invoices.filter(i => {
+    if (!i) return false;
+    return (
+      (i.invoiceNumber || '').toLowerCase().includes(search.toLowerCase()) ||
+      (i.customer?.name || '').toLowerCase().includes(search.toLowerCase())
+    );
+  });
 
   return (
     <div className="space-y-6">

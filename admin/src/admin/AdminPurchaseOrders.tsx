@@ -369,10 +369,13 @@ export const AdminPurchaseOrders = () => {
     }
   };
 
-  const filtered = orders.filter(o =>
-    o.poNumber.toLowerCase().includes(search.toLowerCase()) ||
-    o.supplier.name.toLowerCase().includes(search.toLowerCase())
-  );
+  const filtered = orders.filter(o => {
+    if (!o) return false;
+    return (
+      (o.poNumber || '').toLowerCase().includes(search.toLowerCase()) ||
+      (o.supplier?.name || '').toLowerCase().includes(search.toLowerCase())
+    );
+  });
 
   return (
     <div className="space-y-6">

@@ -247,12 +247,15 @@ export const AdminSuppliers = () => {
     }
   };
 
-  const filteredSuppliers = suppliers.filter(s =>
-    s.name.toLowerCase().includes(search.toLowerCase()) ||
-    (s.contactName || '').toLowerCase().includes(search.toLowerCase()) ||
-    (s.email || '').toLowerCase().includes(search.toLowerCase()) ||
-    (s.phone || '').includes(search)
-  );
+  const filteredSuppliers = suppliers.filter(s => {
+    if (!s) return false;
+    return (
+      (s.name || '').toLowerCase().includes(search.toLowerCase()) ||
+      (s.contactName || '').toLowerCase().includes(search.toLowerCase()) ||
+      (s.email || '').toLowerCase().includes(search.toLowerCase()) ||
+      (s.phone || '').includes(search)
+    );
+  });
 
   return (
     <div className="space-y-6">

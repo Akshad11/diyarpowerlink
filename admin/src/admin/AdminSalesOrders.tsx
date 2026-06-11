@@ -169,10 +169,13 @@ export const AdminSalesOrders = () => {
     }
   };
 
-  const filtered = orders.filter(o =>
-    o.salesOrderNumber.toLowerCase().includes(search.toLowerCase()) ||
-    o.customer.name.toLowerCase().includes(search.toLowerCase())
-  );
+  const filtered = orders.filter(o => {
+    if (!o) return false;
+    return (
+      (o.salesOrderNumber || '').toLowerCase().includes(search.toLowerCase()) ||
+      (o.customer?.name || '').toLowerCase().includes(search.toLowerCase())
+    );
+  });
 
   return (
     <div className="space-y-6">
