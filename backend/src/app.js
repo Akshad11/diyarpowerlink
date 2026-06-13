@@ -18,7 +18,7 @@ app.use('/uploads', express.static(uploadsDir));
 app.use('/api', apiRouter);
 
 // Health Check
-app.get('/health', (_req, res) => {
+app.get(['/health', '/api/health'], (_req, res) => {
   const isConnected = mongoose.connection.readyState === 1;
   const dbStatus = {
     status: isConnected ? 'up' : 'down',
