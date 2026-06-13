@@ -3,18 +3,6 @@ const allowedOrigins = rawOrigins
   .split(',')
   .map((value) => value.trim())
   .filter(Boolean);
-const defaultAllowed = [
-  'https://www.diyarpowerlink.com',
-  'https://diyarpowerlink.com',
-  'https://admin.diyarpowerlink.com'
-];
-for (const origin of defaultAllowed) {
-  if (!allowedOrigins.includes(origin)) allowedOrigins.push(origin);
-}
-const defaultAllowedPatterns = ['https://*.diyarpowerlink.com'];
-for (const pattern of defaultAllowedPatterns) {
-  if (!allowedOrigins.includes(pattern)) allowedOrigins.push(pattern);
-}
 
 const escapeRegex = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const originMatchesPattern = (origin, pattern) => {

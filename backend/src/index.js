@@ -11,9 +11,17 @@ const start = async () => {
     console.error('Missing MONGODB_URI in environment');
     process.exit(1);
   }
-  await mongoose.connect(uri);
+  try {
+    console.log('Connecting to MongoDB...');
+    await mongoose.connect(uri);
+    console.log('Connected to MongoDB successfully.');
+  } catch (err) {
+    console.error('MongoDB connection error:', err.message);
+    process.exit(1);
+  }
   await seedDefaults();
   app.listen(PORT, () => console.log(`Backend listening on http://localhost:${PORT}`));
 };
 
 start();
+
