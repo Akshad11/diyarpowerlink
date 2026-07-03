@@ -8,6 +8,7 @@ import {
   listQuotations, createQuotation, updateQuotation, deleteQuotation,
   listSalesOrders, createSalesOrder, updateSalesOrder, deleteSalesOrder,
   listSalesInvoices, createSalesInvoice, updateSalesInvoice, deleteSalesInvoice,
+  listDeliveryNotes, createDeliveryNote, updateDeliveryNote, deleteDeliveryNote,
   sendCrmEmail, getCrmDashboardSummary
 } from '../controllers/crmController.js';
 
@@ -57,6 +58,12 @@ router.get('/sales-invoices', listSalesInvoices);
 router.post('/sales-invoices', createSalesInvoice);
 router.put('/sales-invoices/:id', updateSalesInvoice);
 router.delete('/sales-invoices/:id', deleteSalesInvoice);
+
+// Delivery Notes
+router.get('/delivery-notes', listDeliveryNotes);
+router.post('/delivery-notes', createDeliveryNote);
+router.put('/delivery-notes/:id', updateDeliveryNote);
+router.delete('/delivery-notes/:id', deleteDeliveryNote);
 
 // Email dispatch
 router.post('/send-email', sendCrmEmail);

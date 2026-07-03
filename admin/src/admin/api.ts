@@ -106,5 +106,34 @@ export const api = {
     });
     if (!res.ok) throw new Error('Request failed');
     return res.json();
+  },
+  listExpenses: async (filters?: { category?: string; startDate?: string; endDate?: string; search?: string }) => {
+    const params = new URLSearchParams();
+    if (filters) {
+      if (filters.category) params.append('category', filters.category);
+      if (filters.startDate) params.append('startDate', filters.startDate);
+      if (filters.endDate) params.append('endDate', filters.endDate);
+      if (filters.search) params.append('search', filters.search);
+    }
+    const query = params.toString() ? `?${params.toString()}` : '';
+    const res = await fetch(`${base}/api/expenses${query}`, {
+      headers: authHeaders(),
+      cache: 'no-store'
+    });
+    if (res.status === 304 || res.status === 204) return [];
+    if (!res.ok) throw new Error('Request failed');
+    return res.json();
+  },
+  profitLossReport: async (startDate?: string, endDate?: string) => {
+    const params = new URLSearchParams();
+    if (startDate) params.append('startDate', startDate);
+    if (endDate) params.append('endDate', endDate);
+    const query = params.toString() ? `?${params.toString()}` : '';
+    const res = await fetch(`${base}/api/reports/profit-loss${query}`, {
+      headers: authHeaders(),
+      cache: 'no-store'
+    });
+    if (!res.ok) throw new Error('Request failed');
+    return res.json();
   }
 };

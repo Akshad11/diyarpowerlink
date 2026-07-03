@@ -131,8 +131,8 @@ export const AdminInvoices = () => {
     }
   };
 
-  const handleDownloadPdf = (inv: SalesInvoice) => {
-    const doc = generateCrmPdf(
+  const handleDownloadPdf = async (inv: SalesInvoice) => {
+    const doc = await generateCrmPdf(
       'Invoice',
       inv.invoiceNumber,
       new Date(inv.date).toLocaleDateString(),
@@ -171,7 +171,7 @@ export const AdminInvoices = () => {
     setEmailSuccess('');
     try {
       // 1. Generate PDF
-      const doc = generateCrmPdf(
+      const doc = await generateCrmPdf(
         'Invoice',
         activeInvoice.invoiceNumber,
         new Date(activeInvoice.date).toLocaleDateString(),
@@ -495,13 +495,36 @@ export const AdminInvoices = () => {
 
             {/* Notes and calculation panels */}
             <div className="flex justify-between items-start gap-8 border-t border-slate-100 pt-6">
-              <div className="max-w-xs space-y-2 text-xs text-slate-500">
-                {activeInvoice.notes && (
-                  <>
-                    <p className="font-bold text-slate-700">Notes / Remarks:</p>
-                    <p className="whitespace-pre-line leading-relaxed">{activeInvoice.notes}</p>
-                  </>
-                )}
+              <div className="flex-1 space-y-4">
+                <div className="max-w-xs space-y-2 text-xs text-slate-500">
+                  {activeInvoice.notes && (
+                    <>
+                      <p className="font-bold text-slate-700">Notes / Remarks:</p>
+                      <p className="whitespace-pre-line leading-relaxed">{activeInvoice.notes}</p>
+                    </>
+                  )}
+                </div>
+
+                {/* QR Code display */}
+                <div className="mt-4 border border-slate-100 rounded-xl p-3 bg-slate-50 inline-block">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Invoice QR Code</span>
+                  <img
+                    src={`https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodeURIComponent(
+                      [
+                        `Invoice: ${activeInvoice.invoiceNumber}`,
+                        `Date: ${new Date(activeInvoice.date).toLocaleDateString()}`,
+                        `Company: ${settings?.websiteName || 'Diyar Power Link LLP'}`,
+                        settings?.companyGst ? `Company GST: ${settings.companyGst}` : '',
+                        settings?.companyTaxNo ? `Company Tax No: ${settings.companyTaxNo}` : '',
+                        `Customer: ${activeInvoice.customer.name}`,
+                        activeInvoice.customer.gstPan ? `Customer GST: ${activeInvoice.customer.gstPan}` : '',
+                        `Total: ₹${activeInvoice.totalAmount.toFixed(2)}`
+                      ].filter(Boolean).join('\n')
+                    )}`}
+                    alt="Invoice QR Code"
+                    className="w-28 h-28 object-contain"
+                  />
+                </div>
               </div>
 
               <div className="w-64 space-y-2.5 text-xs text-slate-600 font-medium">

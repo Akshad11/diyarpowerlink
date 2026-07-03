@@ -109,10 +109,23 @@ export async function syncAdjustmentStock(adj) {
 
 export async function getStockReport() {
   const items = await Item.find({ type: 'product' }).populate('uom').populate('tax').sort({ name: 1 });
-  const report = [];
+  const itemIds = items.map((it) => it._id);
 
-  for (const item of items) {
-    const transactions = await StockLedger.find({ item: item._id }).sort({ date: 1 });
+  // Fetch all transactions for these items at once, sorted by date ascending
+  const allTransactions = await StockLedger.find({ item: { $in: itemIds } }).sort({ date: 1 });
+
+  // Group transactions by item ID
+  const transactionsByItem = {};
+  allTransactions.forEach((t) => {
+    const key = t.item.toString();
+    if (!transactionsByItem[key]) {
+      transactionsByItem[key] = [];
+    }
+    transactionsByItem[key].push(t);
+  });
+
+  const report = items.map((item) => {
+    const transactions = transactionsByItem[item._id.toString()] || [];
     const currentStock = transactions.reduce((sum, t) => sum + t.quantity, 0);
 
     const movements = transactions.map((t) => ({
@@ -123,7 +136,7 @@ export async function getStockReport() {
       remarks: t.remarks
     }));
 
-    report.push({
+    return {
       _id: item._id,
       name: item.name,
       sku: item.sku,
@@ -132,8 +145,8 @@ export async function getStockReport() {
       currentStock,
       movements,
       isLowStock: currentStock < 10 // low stock threshold is 10 units
-    });
-  }
+    };
+  });
 
   return report;
 }

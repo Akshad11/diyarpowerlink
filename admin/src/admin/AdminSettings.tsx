@@ -8,6 +8,8 @@ export const AdminSettings = () => {
   const [form, setForm] = useState<any>({
     websiteName: 'Diyar Power Link LLP',
     logo: '',
+    companyGst: '',
+    companyTaxNo: '',
     footerText: 'Diyar Power Link LLP and Diyar Computers: Your One Shop for All IT Needs. Providing high-quality IT hardware, specialized paper products, medical supplies, and industrial packaging solutions across India.',
     footerDivisions: [
       'IT Solutions & Infrastructure',
@@ -58,6 +60,8 @@ export const AdminSettings = () => {
         body: JSON.stringify({
           websiteName: form.websiteName,
           logo: form.logo,
+          companyGst: form.companyGst || '',
+          companyTaxNo: form.companyTaxNo || '',
           footerText: form.footerText,
           footerDivisions: form.footerDivisions,
           socialLinks: form.socialLinks,
@@ -80,6 +84,8 @@ export const AdminSettings = () => {
       ...form,
       websiteName: '',
       logo: '',
+      companyGst: '',
+      companyTaxNo: '',
       socialLinks: { facebook: '', instagram: '', linkedin: '', twitter: '' },
       socialVisibility: { facebook: true, instagram: true, linkedin: true, twitter: true },
       contactRecipient: '',
@@ -129,9 +135,22 @@ export const AdminSettings = () => {
         <form onSubmit={submit} className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
           {section === 'Brand' && (
             <>
-              <h2 className="text-lg font-semibold text-slate-800">Brand</h2>
-              <input placeholder="Website Name" value={form.websiteName || ''} onChange={(e) => setForm({ ...form, websiteName: e.target.value })} className="w-full border border-slate-200 rounded-xl px-3 py-2" />
-              <UploadField label="Logo" value={form.logo || ''} onChange={(val) => setForm({ ...form, logo: val })} />
+              <h2 className="text-lg font-semibold text-slate-800">Brand & Company Info</h2>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-xs font-semibold text-slate-500 mb-1">Website / Company Name</label>
+                  <input placeholder="Website Name" value={form.websiteName || ''} onChange={(e) => setForm({ ...form, websiteName: e.target.value })} className="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm" />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-slate-500 mb-1">Company GST Number</label>
+                  <input placeholder="Company GST" value={form.companyGst || ''} onChange={(e) => setForm({ ...form, companyGst: e.target.value.toUpperCase() })} className="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm uppercase" />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-slate-500 mb-1">Company Tax/Registration No.</label>
+                  <input placeholder="Company Tax No" value={form.companyTaxNo || ''} onChange={(e) => setForm({ ...form, companyTaxNo: e.target.value })} className="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm" />
+                </div>
+                <UploadField label="Logo" value={form.logo || ''} onChange={(val) => setForm({ ...form, logo: val })} />
+              </div>
             </>
           )}
           {section === 'Social' && (

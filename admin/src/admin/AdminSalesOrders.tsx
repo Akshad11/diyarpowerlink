@@ -112,8 +112,8 @@ export const AdminSalesOrders = () => {
     }
   };
 
-  const handleDownloadPdf = (o: SalesOrder) => {
-    const doc = generateCrmPdf(
+  const handleDownloadPdf = async (o: SalesOrder) => {
+    const doc = await generateCrmPdf(
       'Sales Order',
       o.salesOrderNumber,
       new Date(o.date).toLocaleDateString(),

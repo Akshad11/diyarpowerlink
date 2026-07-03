@@ -1,6 +1,6 @@
 import express from 'express';
 import { requireAuth } from '../middleware/authMiddleware.js';
-import { getReportsSummary } from '../controllers/reportController.js';
+import { getReportsSummary, getProfitLossReport } from '../controllers/reportController.js';
 
 const router = express.Router();
 
@@ -9,5 +9,8 @@ router.use(requireAuth);
 
 // Aggregate report dashboard summary
 router.get('/summary', getReportsSummary);
+
+// Profit & Loss statement calculation
+router.get('/profit-loss', getProfitLossReport);
 
 export default router;

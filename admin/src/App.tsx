@@ -18,6 +18,7 @@ import { AdminUomsTaxes } from './admin/AdminUomsTaxes';
 import { AdminQuotations } from './admin/AdminQuotations';
 import { AdminSalesOrders } from './admin/AdminSalesOrders';
 import { AdminInvoices } from './admin/AdminInvoices';
+import { AdminDeliveryNotes } from './admin/AdminDeliveryNotes';
 import { ProcurementDashboard } from './admin/ProcurementDashboard';
 import { AdminSuppliers } from './admin/AdminSuppliers';
 import { AdminInquiries } from './admin/AdminInquiries';
@@ -27,6 +28,8 @@ import { AdminPurchaseOrders } from './admin/AdminPurchaseOrders';
 import { AdminCurrencies } from './admin/AdminCurrencies';
 import { AdminInventory } from './admin/AdminInventory';
 import { AdminReports } from './admin/AdminReports';
+import { AdminExpenses } from './admin/AdminExpenses';
+import { AdminProfitLoss } from './admin/AdminProfitLoss';
 import { pingApi } from './api';
 
 const ScrollToTop = () => {
@@ -76,6 +79,7 @@ export default function App() {
           <Route path="crm/quotations" element={<AdminQuotations />} />
           <Route path="crm/sales-orders" element={<AdminSalesOrders />} />
           <Route path="crm/invoices" element={<AdminInvoices />} />
+          <Route path="crm/delivery-notes" element={<AdminDeliveryNotes />} />
           <Route path="procurement" element={<ProcurementDashboard />} />
           <Route path="procurement/suppliers" element={<AdminSuppliers />} />
           <Route path="procurement/inquiries" element={<AdminInquiries />} />
@@ -85,6 +89,8 @@ export default function App() {
           <Route path="currencies" element={<AdminCurrencies />} />
           <Route path="inventory" element={<AdminInventory />} />
           <Route path="reports" element={<AdminReports />} />
+          <Route path="expenses" element={<AdminExpenses />} />
+          <Route path="profit-loss" element={<AdminProfitLoss />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

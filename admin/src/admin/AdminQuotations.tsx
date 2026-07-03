@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { api } from './api';
 import { generateCrmPdf } from './generateCrmPdf';
 import {
@@ -83,6 +84,7 @@ interface Quotation {
 }
 
 export const AdminQuotations = () => {
+  const location = useLocation();
   const [quotations, setQuotations] = useState<Quotation[]>([]);
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [itemsMaster, setItemsMaster] = useState<Item[]>([]);
@@ -145,6 +147,18 @@ export const AdminQuotations = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (location.state?.prefillCustomerId && customers.length > 0) {
+      const found = customers.find(c => c._id === location.state.prefillCustomerId);
+      if (found) {
+        handleNew();
+        setCustomerId(location.state.prefillCustomerId);
+        // Clear history state to avoid triggering on re-entry
+        window.history.replaceState({}, document.title);
+      }
+    }
+  }, [location.state, customers]);
 
   const fetchData = async () => {
     setLoading(true);
@@ -350,8 +364,8 @@ export const AdminQuotations = () => {
     }
   };
 
-  const handleDownloadPdf = (q: Quotation) => {
-    const doc = generateCrmPdf(
+  const handleDownloadPdf = async (q: Quotation) => {
+    const doc = await generateCrmPdf(
       'Quotation',
       q.quotationNumber,
       new Date(q.date).toLocaleDateString(),
@@ -386,7 +400,7 @@ export const AdminQuotations = () => {
     setEmailSuccess('');
     try {
       // 1. Generate PDF
-      const doc = generateCrmPdf(
+      const doc = await generateCrmPdf(
         'Quotation',
         activeQuotation.quotationNumber,
         new Date(activeQuotation.date).toLocaleDateString(),

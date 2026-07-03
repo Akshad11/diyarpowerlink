@@ -1,4 +1,4 @@
-﻿import mongoose from 'mongoose';
+import mongoose from 'mongoose';
 
 const TitleDescSchema = new mongoose.Schema(
   {
@@ -29,6 +29,8 @@ const SettingsSchema = new mongoose.Schema(
   {
     websiteName: { type: String, default: 'Diyar Power Link LLP' },
     logo: { type: String, default: '' },
+    companyGst: { type: String, default: '' },
+    companyTaxNo: { type: String, default: '' },
     footerText: { type: String, default: '' },
     footerDivisions: { type: [String], default: [] },
     socialLinks: {

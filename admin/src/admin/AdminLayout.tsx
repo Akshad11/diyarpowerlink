@@ -174,6 +174,15 @@ export const AdminLayout = () => {
             Invoices
           </Link>
           <Link
+            to="/crm/delivery-notes"
+            className={`block px-4 py-2 rounded-xl text-sm font-semibold ${location.pathname.startsWith('/crm/delivery-notes')
+              ? 'bg-blue-600 text-white'
+              : 'text-slate-600 hover:bg-slate-100'
+              }`}
+          >
+            Delivery Notes
+          </Link>
+          <Link
             to="/crm/uoms-taxes"
             className={`block px-4 py-2 rounded-xl text-sm font-semibold ${location.pathname === '/crm/uoms-taxes'
               ? 'bg-blue-600 text-white'
@@ -252,6 +261,15 @@ export const AdminLayout = () => {
             Inventory Management
           </Link>
           <Link
+            to="/expenses"
+            className={`block px-4 py-2 rounded-xl text-sm font-semibold ${location.pathname.startsWith('/expenses')
+              ? 'bg-rose-600 text-white'
+              : 'text-slate-600 hover:bg-slate-100'
+              }`}
+          >
+            Expense Tracker
+          </Link>
+          <Link
             to="/reports"
             className={`block px-4 py-2 rounded-xl text-sm font-semibold ${location.pathname === '/reports'
               ? 'bg-blue-600 text-white'
@@ -259,6 +277,15 @@ export const AdminLayout = () => {
               }`}
           >
             Analytics & Reports
+          </Link>
+          <Link
+            to="/profit-loss"
+            className={`block px-4 py-2 rounded-xl text-sm font-semibold ${location.pathname === '/profit-loss'
+              ? 'bg-violet-600 text-white'
+              : 'text-slate-600 hover:bg-slate-100'
+              }`}
+          >
+            Profit & Loss Statement
           </Link>
           <Link
             to="/currencies"

@@ -22,11 +22,11 @@ const SalesInvoiceItemSchema = new mongoose.Schema(
 const SalesInvoiceSchema = new mongoose.Schema(
   {
     invoiceNumber: { type: String, required: true, unique: true },
-    salesOrder: { type: mongoose.Schema.Types.ObjectId, ref: 'SalesOrder' },
-    customer: { type: mongoose.Schema.Types.ObjectId, ref: 'Customer', required: true },
+    salesOrder: { type: mongoose.Schema.Types.ObjectId, ref: 'SalesOrder', index: true },
+    customer: { type: mongoose.Schema.Types.ObjectId, ref: 'Customer', required: true, index: true },
     currency: { type: String, default: 'INR' },
     exchangeRate: { type: Number, default: 1 },
-    date: { type: Date, required: true, default: Date.now },
+    date: { type: Date, required: true, default: Date.now, index: true },
     dueDate: { type: Date },
     items: { type: [SalesInvoiceItemSchema], default: [] },
     discountType: { type: String, enum: ['percentage', 'flat', 'none'], default: 'none' },

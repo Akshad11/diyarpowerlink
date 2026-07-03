@@ -5,6 +5,7 @@ import { Item } from '../models/Item.js';
 import { Quotation } from '../models/Quotation.js';
 import { SalesOrder } from '../models/SalesOrder.js';
 import { SalesInvoice } from '../models/SalesInvoice.js';
+import { DeliveryNote } from '../models/DeliveryNote.js';
 import { getNextSequenceNumber } from '../services/sequenceService.js';
 import { sendMail } from '../services/emailService.js';
 import { syncSalesInvoiceStock } from '../services/inventoryService.js';
@@ -275,6 +276,59 @@ export const deleteSalesInvoice = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+// CRM - Delivery Notes CRUD
+export const listDeliveryNotes = async (_req, res) => {
+  try {
+    const notes = await DeliveryNote.find()
+      .populate('customer')
+      .populate('salesOrder')
+      .populate('salesInvoice')
+      .sort({ createdAt: -1 });
+    res.json(notes);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+export const createDeliveryNote = async (req, res) => {
+  try {
+    const payload = { ...req.body };
+    if (!payload.deliveryNoteNumber) {
+      payload.deliveryNoteNumber = await getNextSequenceNumber('DN', DeliveryNote, 'deliveryNoteNumber');
+    }
+    const created = await DeliveryNote.create(payload);
+    const populated = await DeliveryNote.findById(created._id)
+      .populate('customer')
+      .populate('salesOrder')
+      .populate('salesInvoice');
+    res.json(populated);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+export const updateDeliveryNote = async (req, res) => {
+  try {
+    const updated = await DeliveryNote.findByIdAndUpdate(req.params.id, req.body, { new: true })
+      .populate('customer')
+      .populate('salesOrder')
+      .populate('salesInvoice');
+    res.json(updated);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+export const deleteDeliveryNote = async (req, res) => {
+  try {
+    await DeliveryNote.findByIdAndDelete(req.params.id);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 
 // CRM - Send Email with PDF Attachment
 export const sendCrmEmail = async (req, res) => {

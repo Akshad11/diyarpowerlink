@@ -21,11 +21,11 @@ const PurchaseOrderItemSchema = new mongoose.Schema(
 const PurchaseOrderSchema = new mongoose.Schema(
   {
     poNumber: { type: String, required: true, unique: true },
-    supplierQuotation: { type: mongoose.Schema.Types.ObjectId, ref: 'SupplierQuotation' },
-    supplier: { type: mongoose.Schema.Types.ObjectId, ref: 'Supplier', required: true },
+    supplierQuotation: { type: mongoose.Schema.Types.ObjectId, ref: 'SupplierQuotation', index: true },
+    supplier: { type: mongoose.Schema.Types.ObjectId, ref: 'Supplier', required: true, index: true },
     currency: { type: String, default: 'INR' },
     exchangeRate: { type: Number, default: 1 },
-    date: { type: Date, required: true, default: Date.now },
+    date: { type: Date, required: true, default: Date.now, index: true },
     deliveryDate: { type: Date },
     items: { type: [PurchaseOrderItemSchema], default: [] },
     discountType: { type: String, enum: ['percentage', 'flat', 'none'], default: 'none' },
