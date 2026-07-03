@@ -1,5 +1,5 @@
 import { jsPDF } from 'jspdf';
-import 'jspdf-autotable';
+import autoTable from 'jspdf-autotable';
 
 interface SectionTotal {
   productRevenue?: number;
@@ -143,14 +143,14 @@ export const generateProfitLossPdf = (report: ProfitLossReport, settings: any) =
   addTotalRow('NET PROFIT', report.netProfit);
 
   // Render Table
-  doc.autoTable({
+  autoTable(doc, {
     startY: 112,
     body: tableRows,
     theme: 'plain',
     styles: { fontSize: 9, cellPadding: 3, textColor: [30, 41, 59] },
     columnStyles: {
-      0: { width: 130 },
-      1: { width: 52, halign: 'right', fontStyle: 'bold' }
+      0: { cellWidth: 130 },
+      1: { cellWidth: 52, halign: 'right', fontStyle: 'bold' }
     },
     didParseCell: (data: any) => {
       const rowText = data.cell.text[0] || '';

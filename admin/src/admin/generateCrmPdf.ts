@@ -1,5 +1,5 @@
 import { jsPDF } from 'jspdf';
-import 'jspdf-autotable';
+import autoTable from 'jspdf-autotable';
 import { resolveImageUrl } from './resolveImage';
 
 // Type definitions to prevent typescript compilation errors
@@ -194,12 +194,12 @@ export const generateCrmPdf = async (
       item.remarks || ''
     ]);
     columnStyles = {
-      0: { width: 10 },
-      1: { width: 70 },
-      2: { width: 25 },
-      3: { width: 25, halign: 'center' },
-      4: { width: 20 },
-      5: { width: 32 }
+      0: { cellWidth: 10 },
+      1: { cellWidth: 70 },
+      2: { cellWidth: 25 },
+      3: { cellWidth: 25, halign: 'center' },
+      4: { cellWidth: 20 },
+      5: { cellWidth: 32 }
     };
   } else {
     headers = [['#', 'Item Details', 'SKU', 'Qty', 'UOM', 'Rate (INR)', 'Disc %', 'GST %', 'Total (INR)']];
@@ -215,19 +215,19 @@ export const generateCrmPdf = async (
       `₹${(item.total || 0).toFixed(2)}`
     ]);
     columnStyles = {
-      0: { width: 8 },
-      1: { width: 50 },
-      2: { width: 20 },
-      3: { width: 10, halign: 'center' },
-      4: { width: 15 },
-      5: { width: 22, halign: 'right' },
-      6: { width: 14, halign: 'center' },
-      7: { width: 14, halign: 'center' },
-      8: { width: 25, halign: 'right' }
+      0: { cellWidth: 8 },
+      1: { cellWidth: 50 },
+      2: { cellWidth: 20 },
+      3: { cellWidth: 10, halign: 'center' },
+      4: { cellWidth: 15 },
+      5: { cellWidth: 22, halign: 'right' },
+      6: { cellWidth: 14, halign: 'center' },
+      7: { cellWidth: 14, halign: 'center' },
+      8: { cellWidth: 25, halign: 'right' }
     };
   }
 
-  doc.autoTable({
+  autoTable(doc, {
     startY: startY,
     head: headers,
     body: tableRows,

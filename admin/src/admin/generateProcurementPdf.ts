@@ -1,5 +1,5 @@
 import { jsPDF } from 'jspdf';
-import 'jspdf-autotable';
+import autoTable from 'jspdf-autotable';
 
 // Type definitions to prevent typescript compilation errors
 interface SupplierAddress {
@@ -148,14 +148,14 @@ export const generateProcurementPdf = (
       '________________'  // Empty line for writing total
     ]);
     columnStyles = {
-      0: { width: 8 },
-      1: { width: 60 },
-      2: { width: 25 },
-      3: { width: 12, halign: 'center' },
-      4: { width: 15 },
-      5: { width: 30, halign: 'center' },
-      6: { width: 20, halign: 'center' },
-      7: { width: 30, halign: 'center' }
+      0: { cellWidth: 8 },
+      1: { cellWidth: 60 },
+      2: { cellWidth: 25 },
+      3: { cellWidth: 12, halign: 'center' },
+      4: { cellWidth: 15 },
+      5: { cellWidth: 30, halign: 'center' },
+      6: { cellWidth: 20, halign: 'center' },
+      7: { cellWidth: 30, halign: 'center' }
     };
   } else {
     // Standard PO Table with Pricing
@@ -171,18 +171,18 @@ export const generateProcurementPdf = (
       `${currSymbol}${(item.total || 0).toFixed(2)}`
     ]);
     columnStyles = {
-      0: { width: 8 },
-      1: { width: 65 },
-      2: { width: 25 },
-      3: { width: 12, halign: 'center' },
-      4: { width: 15 },
-      5: { width: 25, halign: 'right' },
-      6: { width: 15, halign: 'center' },
-      7: { width: 30, halign: 'right' }
+      0: { cellWidth: 8 },
+      1: { cellWidth: 65 },
+      2: { cellWidth: 25 },
+      3: { cellWidth: 12, halign: 'center' },
+      4: { cellWidth: 15 },
+      5: { cellWidth: 25, halign: 'right' },
+      6: { cellWidth: 15, halign: 'center' },
+      7: { cellWidth: 30, halign: 'right' }
     };
   }
 
-  doc.autoTable({
+  autoTable(doc, {
     startY: startY,
     head: headers,
     body: tableRows,
