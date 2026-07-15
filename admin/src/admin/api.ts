@@ -44,21 +44,45 @@ export const api = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...authHeaders() },
     body: JSON.stringify(data)
-  }).then(r => r.json()),
+  }).then(async r => {
+    if (!r.ok) {
+      const errData = await r.json().catch(() => ({}));
+      throw new Error(errData.error || errData.message || `Request failed with status ${r.status}`);
+    }
+    return r.json();
+  }),
   update: (resource: string, id: string, data: any) => fetch(`${base}/api/${resource}/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json', ...authHeaders() },
     body: JSON.stringify(data)
-  }).then(r => r.json()),
+  }).then(async r => {
+    if (!r.ok) {
+      const errData = await r.json().catch(() => ({}));
+      throw new Error(errData.error || errData.message || `Request failed with status ${r.status}`);
+    }
+    return r.json();
+  }),
   remove: (resource: string, id: string) => fetch(`${base}/api/${resource}/${id}`, {
     method: 'DELETE',
     headers: authHeaders()
-  }).then(r => r.json()),
+  }).then(async r => {
+    if (!r.ok) {
+      const errData = await r.json().catch(() => ({}));
+      throw new Error(errData.error || errData.message || `Request failed with status ${r.status}`);
+    }
+    return r.json();
+  }),
   patch: (resource: string, id: string, data: any) => fetch(`${base}/api/${resource}/${id}`, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json', ...authHeaders() },
     body: JSON.stringify(data)
-  }).then(r => r.json()),
+  }).then(async r => {
+    if (!r.ok) {
+      const errData = await r.json().catch(() => ({}));
+      throw new Error(errData.error || errData.message || `Request failed with status ${r.status}`);
+    }
+    return r.json();
+  }),
   upload: (file: File) => {
     const form = new FormData();
     form.append('file', file);
@@ -66,12 +90,24 @@ export const api = {
       method: 'POST',
       headers: { ...authHeaders() },
       body: form
-    }).then(r => r.json());
+    }).then(async r => {
+      if (!r.ok) {
+        const errData = await r.json().catch(() => ({}));
+        throw new Error(errData.error || errData.message || `Upload failed with status ${r.status}`);
+      }
+      return r.json();
+    });
   },
   seedDefaults: () => fetch(`${base}/api/admin/seed-defaults`, {
     method: 'POST',
     headers: authHeaders()
-  }).then(r => r.json()),
+  }).then(async r => {
+    if (!r.ok) {
+      const errData = await r.json().catch(() => ({}));
+      throw new Error(errData.error || errData.message || `Restore failed with status ${r.status}`);
+    }
+    return r.json();
+  }),
   crmDashboardSummary: async () => {
     const res = await fetch(`${base}/api/crm/dashboard-summary`, {
       headers: authHeaders(),

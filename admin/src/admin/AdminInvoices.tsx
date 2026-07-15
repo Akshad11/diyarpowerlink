@@ -406,8 +406,24 @@ export const AdminInvoices = () => {
             <div className="flex justify-between items-start gap-4">
               <div>
                 <h3 className="text-xl font-bold text-slate-900">{settings?.websiteName || 'Diyar Power Link LLP'}</h3>
-                <p className="text-xs text-slate-500 max-w-xs mt-1">{settings?.contactAddress}</p>
-                <p className="text-xs text-slate-500">Phone: {settings?.contactPhone} | Email: {settings?.contactEmail}</p>
+                <p className="text-xs text-slate-500 max-w-lg mt-1">{settings?.contactAddress}</p>
+                <p className="text-xs text-slate-500">
+                  {settings?.contactPhone && <span className="mr-3"><strong>Phone:</strong> {settings.contactPhone}</span>}
+                  {settings?.companyMobile && <span className="mr-3"><strong>Mobile:</strong> {settings.companyMobile}</span>}
+                  {settings?.contactEmail && <span><strong>Email:</strong> {settings.contactEmail}</span>}
+                </p>
+                {(settings?.companyGst || settings?.companyLlpNo || settings?.companyPanNo || settings?.companyChamberCommerce || settings?.companyFax || settings?.companyTelephone || settings?.companyPoBox) && (
+                  <p className="text-xs text-slate-500 mt-1 flex flex-wrap gap-x-3 gap-y-0.5">
+                    {settings.companyGst && <span><strong>GST:</strong> {settings.companyGst}</span>}
+                    {settings.companyLlpNo && <span><strong>LLP No:</strong> {settings.companyLlpNo}</span>}
+                    {settings.companyPanNo && <span><strong>PAN:</strong> {settings.companyPanNo}</span>}
+                    {settings.companyChamberCommerce && <span><strong>Chamber Commerce:</strong> {settings.companyChamberCommerce}</span>}
+                    {settings.companyTelephone && <span><strong>Tel:</strong> {settings.companyTelephone}</span>}
+                    {settings.companyFax && <span><strong>Fax:</strong> {settings.companyFax}</span>}
+                    {settings.companyPoBox && <span><strong>PO Box:</strong> {settings.companyPoBox}</span>}
+                    {settings.companyPinCode && <span><strong>PIN:</strong> {settings.companyPinCode}</span>}
+                  </p>
+                )}
               </div>
               <div className="text-right">
                 <span className="text-xs font-bold text-slate-400 uppercase tracking-widest block font-semibold">Tax Invoice</span>

@@ -52,9 +52,9 @@ export const generateProcurementPdf = (
   const doc = new jsPDF() as any;
 
   const websiteName = settings?.websiteName || 'Diyar Power Link LLP';
-  const companyPhone = settings?.contactPhone || '+966-XXXX-XXXX';
-  const companyEmail = settings?.contactEmail || 'info@diyarpowerlink.com';
-  const companyAddress = settings?.contactAddress || 'Riyadh, Saudi Arabia';
+  const companyPhone = settings?.contactPhone || '+91 8688050498';
+  const companyEmail = settings?.contactEmail || 'diyarpowerlink@gnail.com';
+  const companyAddress = settings?.contactAddress || 'Building 10-6-87/2, Street Rural Police Station, Srinivasa Colony, Mahabubnagar - 509001, Telangana, India';
 
   const getCurrencySymbol = (code: string) => {
     if (code === 'USD') return '$';
@@ -68,14 +68,44 @@ export const generateProcurementPdf = (
 
   // 1. Header (Company Info)
   doc.setFont('Helvetica', 'bold');
-  doc.setFontSize(20);
+  doc.setFontSize(16);
   doc.setTextColor(30, 41, 59); // Slate 800
-  doc.text(websiteName, 14, 20);
+  doc.text(websiteName, 14, 15);
 
   doc.setFont('Helvetica', 'normal');
-  doc.setFontSize(9);
+  doc.setFontSize(8);
   doc.setTextColor(100, 116, 139); // Slate 500
-  doc.text(`${companyAddress} | Phone: ${companyPhone} | Email: ${companyEmail}`, 14, 26);
+
+  // Line 1: Address
+  const headerText1 = companyAddress;
+
+  // Line 2: Phone, Mobile, Email, Fax, Tel
+  const contactParts = [];
+  if (companyPhone) contactParts.push(`Phone: ${companyPhone}`);
+  if (settings?.companyMobile) contactParts.push(`Mobile: ${settings.companyMobile}`);
+  if (companyEmail) contactParts.push(`Email: ${companyEmail}`);
+  if (settings?.companyTelephone) contactParts.push(`Tel: ${settings.companyTelephone}`);
+  if (settings?.companyFax) contactParts.push(`Fax: ${settings.companyFax}`);
+  const headerText2 = contactParts.join(' | ');
+
+  // Line 3: Tax, Registration, and other business IDs
+  const regParts = [];
+  const companyGst = settings?.companyGst || '36AAZFD4567E1ZX';
+  const companyLlpNo = settings?.companyLlpNo || 'ACV-6042';
+  const companyPinCode = settings?.companyPinCode || '509001';
+
+  if (companyGst) regParts.push(`GST: ${companyGst}`);
+  if (companyLlpNo) regParts.push(`LLP No: ${companyLlpNo}`);
+  if (settings?.companyTaxNo) regParts.push(`Tax No: ${settings.companyTaxNo}`);
+  if (settings?.companyPanNo) regParts.push(`PAN: ${settings.companyPanNo}`);
+  if (settings?.companyChamberCommerce) regParts.push(`Chamber Commerce: ${settings.companyChamberCommerce}`);
+  if (settings?.companyPoBox) regParts.push(`PO Box: ${settings.companyPoBox}`);
+  if (companyPinCode) regParts.push(`PIN: ${companyPinCode}`);
+  const headerText3 = regParts.join(' | ');
+
+  doc.text(headerText1, 14, 19);
+  if (headerText2) doc.text(headerText2, 14, 23);
+  if (headerText3) doc.text(headerText3, 14, 27);
 
   // Divider Line
   doc.setDrawColor(226, 232, 240); // Slate 200

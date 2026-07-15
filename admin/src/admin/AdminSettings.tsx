@@ -10,6 +10,17 @@ export const AdminSettings = () => {
     logo: '',
     companyGst: '',
     companyTaxNo: '',
+    companyLlpNo: '',
+    companyChamberCommerce: '',
+    companyTelephone: '',
+    companyFax: '',
+    companyPinCode: '',
+    companyPanNo: '',
+    companyPoBox: '',
+    companyMobile: '',
+    contactAddress: '',
+    contactPhone: '',
+    contactEmail: '',
     footerText: 'Diyar Power Link LLP and Diyar Computers: Your One Shop for All IT Needs. Providing high-quality IT hardware, specialized paper products, medical supplies, and industrial packaging solutions across India.',
     footerDivisions: [
       'IT Solutions & Infrastructure',
@@ -62,6 +73,17 @@ export const AdminSettings = () => {
           logo: form.logo,
           companyGst: form.companyGst || '',
           companyTaxNo: form.companyTaxNo || '',
+          companyLlpNo: form.companyLlpNo || '',
+          companyChamberCommerce: form.companyChamberCommerce || '',
+          companyTelephone: form.companyTelephone || '',
+          companyFax: form.companyFax || '',
+          companyPinCode: form.companyPinCode || '',
+          companyPanNo: form.companyPanNo || '',
+          companyPoBox: form.companyPoBox || '',
+          companyMobile: form.companyMobile || '',
+          contactAddress: form.contactAddress || '',
+          contactPhone: form.contactPhone || '',
+          contactEmail: form.contactEmail || '',
           footerText: form.footerText,
           footerDivisions: form.footerDivisions,
           socialLinks: form.socialLinks,
@@ -137,17 +159,59 @@ export const AdminSettings = () => {
             <>
               <h2 className="text-lg font-semibold text-slate-800">Brand & Company Info</h2>
               <div className="space-y-4">
-                <div>
-                  <label className="block text-xs font-semibold text-slate-500 mb-1">Website / Company Name</label>
-                  <input placeholder="Website Name" value={form.websiteName || ''} onChange={(e) => setForm({ ...form, websiteName: e.target.value })} className="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm" />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-slate-500 mb-1">Company GST Number</label>
-                  <input placeholder="Company GST" value={form.companyGst || ''} onChange={(e) => setForm({ ...form, companyGst: e.target.value.toUpperCase() })} className="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm uppercase" />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-slate-500 mb-1">Company Tax/Registration No.</label>
-                  <input placeholder="Company Tax No" value={form.companyTaxNo || ''} onChange={(e) => setForm({ ...form, companyTaxNo: e.target.value })} className="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm" />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-500 mb-1">Website / Company Name</label>
+                    <input placeholder="Website Name" value={form.websiteName || ''} onChange={(e) => setForm({ ...form, websiteName: e.target.value })} className="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-500 mb-1">Company GST Number</label>
+                    <input placeholder="Company GST" value={form.companyGst || ''} onChange={(e) => setForm({ ...form, companyGst: e.target.value.toUpperCase() })} className="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm uppercase" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-500 mb-1">Company LLP Number</label>
+                    <input placeholder="LLP Number" value={form.companyLlpNo || ''} onChange={(e) => setForm({ ...form, companyLlpNo: e.target.value.toUpperCase() })} className="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm uppercase" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-500 mb-1">Company PAN Number</label>
+                    <input placeholder="PAN Number" value={form.companyPanNo || ''} onChange={(e) => setForm({ ...form, companyPanNo: e.target.value.toUpperCase() })} className="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm uppercase" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-500 mb-1">Chamber of Commerce No</label>
+                    <input placeholder="Chamber of Commerce" value={form.companyChamberCommerce || ''} onChange={(e) => setForm({ ...form, companyChamberCommerce: e.target.value })} className="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-500 mb-1">PO Box No</label>
+                    <input placeholder="PO Box No" value={form.companyPoBox || ''} onChange={(e) => setForm({ ...form, companyPoBox: e.target.value })} className="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-500 mb-1">Pin Code</label>
+                    <input placeholder="Pin Code" value={form.companyPinCode || ''} onChange={(e) => setForm({ ...form, companyPinCode: e.target.value })} className="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-500 mb-1">Telephone No</label>
+                    <input placeholder="Telephone No" value={form.companyTelephone || ''} onChange={(e) => setForm({ ...form, companyTelephone: e.target.value })} className="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-500 mb-1">Fax No</label>
+                    <input placeholder="Fax No" value={form.companyFax || ''} onChange={(e) => setForm({ ...form, companyFax: e.target.value })} className="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-500 mb-1">Email</label>
+                    <input placeholder="diyarpowerlink@gmail.com" type="email" value={form.contactEmail || ''} onChange={(e) => setForm({ ...form, contactEmail: e.target.value })} className="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-500 mb-1">Mobile No</label>
+                    <input placeholder="Mobile No" value={form.contactPhone || ''} onChange={(e) => setForm({ ...form, contactPhone: e.target.value })} className="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-500 mb-1">Other Registration (Tax No)</label>
+                    <input placeholder="Company Tax No" value={form.companyTaxNo || ''} onChange={(e) => setForm({ ...form, companyTaxNo: e.target.value })} className="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm" />
+                  </div>
+                  <div className="md:col-span-2">
+                    <label className="block text-xs font-semibold text-slate-500 mb-1">Company Address</label>
+                    <textarea rows={2} placeholder="Full Address" value={form.contactAddress || ''} onChange={(e) => setForm({ ...form, contactAddress: e.target.value })} className="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm" />
+                  </div>
                 </div>
                 <UploadField label="Logo" value={form.logo || ''} onChange={(val) => setForm({ ...form, logo: val })} />
               </div>

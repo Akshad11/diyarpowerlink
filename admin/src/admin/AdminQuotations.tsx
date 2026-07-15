@@ -281,6 +281,11 @@ export const AdminQuotations = () => {
     setItems(items.map((it, i) => i === index ? { ...it, price } : it));
   };
 
+  const handleUpdateItemTaxRate = (index: number, taxRate: number) => {
+    if (taxRate < 0 || taxRate > 100) return;
+    setItems(items.map((it, i) => i === index ? { ...it, taxRate, taxName: taxRate > 0 ? 'GST' : 'Exempt' } : it));
+  };
+
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!customerId || items.length === 0) {
@@ -734,8 +739,15 @@ export const AdminQuotations = () => {
                             className="w-24 px-2 py-1 border border-slate-200 rounded-lg text-sm"
                           />
                         </td>
-                        <td className="py-3 text-xs text-slate-600 font-medium">
-                          {it.taxName} ({it.taxRate}%)
+                        <td className="py-3">
+                          <input
+                            type="number"
+                            min="0"
+                            max="100"
+                            value={it.taxRate}
+                            onChange={e => handleUpdateItemTaxRate(idx, Number(e.target.value) || 0)}
+                            className="w-16 px-2 py-1 border border-slate-200 rounded-lg text-sm text-center"
+                          />
                         </td>
                         <td className="py-3">
                           <input
@@ -981,8 +993,24 @@ export const AdminQuotations = () => {
             <div className="flex justify-between items-start gap-4">
               <div>
                 <h3 className="text-xl font-bold text-slate-900">{settings?.websiteName || 'Diyar Power Link LLP'}</h3>
-                <p className="text-xs text-slate-500 max-w-xs mt-1">{settings?.contactAddress || 'Riyadh, Saudi Arabia'}</p>
-                <p className="text-xs text-slate-500">Phone: {settings?.contactPhone} | Email: {settings?.contactEmail}</p>
+                <p className="text-xs text-slate-500 max-w-lg mt-1">{settings?.contactAddress || 'Riyadh, Saudi Arabia'}</p>
+                <p className="text-xs text-slate-500">
+                  {settings?.contactPhone && <span className="mr-3"><strong>Phone:</strong> {settings.contactPhone}</span>}
+                  {settings?.companyMobile && <span className="mr-3"><strong>Mobile:</strong> {settings.companyMobile}</span>}
+                  {settings?.contactEmail && <span><strong>Email:</strong> {settings.contactEmail}</span>}
+                </p>
+                {(settings?.companyGst || settings?.companyLlpNo || settings?.companyPanNo || settings?.companyChamberCommerce || settings?.companyFax || settings?.companyTelephone || settings?.companyPoBox) && (
+                  <p className="text-xs text-slate-500 mt-1 flex flex-wrap gap-x-3 gap-y-0.5">
+                    {settings.companyGst && <span><strong>GST:</strong> {settings.companyGst}</span>}
+                    {settings.companyLlpNo && <span><strong>LLP No:</strong> {settings.companyLlpNo}</span>}
+                    {settings.companyPanNo && <span><strong>PAN:</strong> {settings.companyPanNo}</span>}
+                    {settings.companyChamberCommerce && <span><strong>Chamber Commerce:</strong> {settings.companyChamberCommerce}</span>}
+                    {settings.companyTelephone && <span><strong>Tel:</strong> {settings.companyTelephone}</span>}
+                    {settings.companyFax && <span><strong>Fax:</strong> {settings.companyFax}</span>}
+                    {settings.companyPoBox && <span><strong>PO Box:</strong> {settings.companyPoBox}</span>}
+                    {settings.companyPinCode && <span><strong>PIN:</strong> {settings.companyPinCode}</span>}
+                  </p>
+                )}
               </div>
               <div className="text-right">
                 <span className="text-xs font-bold text-slate-400 uppercase tracking-widest block">Quotation</span>

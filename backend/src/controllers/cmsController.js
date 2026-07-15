@@ -254,6 +254,11 @@ export async function seedDefaults() {
   if (productCount === 0) await Product.insertMany(defaultProducts);
   if (settingsCount === 0) {
     await Settings.create(defaultSettings);
+  } else {
+    const existing = await Settings.findOne();
+    if (existing) {
+      await Settings.findByIdAndUpdate(existing._id, defaultSettings, { new: true });
+    }
   }
 
   if (currencyCount === 0) {

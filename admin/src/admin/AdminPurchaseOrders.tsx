@@ -37,6 +37,7 @@ interface QuotationItem {
   uom: string;
   price: number;
   taxRate: number;
+  taxName: string;
   taxAmount: number;
   total: number;
 }
@@ -146,6 +147,7 @@ export const AdminPurchaseOrders = () => {
       const taxVal = sub * (line.taxRate / 100);
       return {
         ...line,
+        taxName: line.taxName || 'GST',
         taxAmount: taxVal,
         total: sub + taxVal
       };
@@ -187,6 +189,7 @@ export const AdminPurchaseOrders = () => {
         uom: master.uom?.code || 'PCS',
         price: addPrice || master.price || 0,
         taxRate: addTaxRate,
+        taxName: master.tax?.name || 'GST',
         taxAmount: 0,
         total: 0
       }
