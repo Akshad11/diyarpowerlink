@@ -351,6 +351,7 @@ export const AdminSupplierQuotations = () => {
           uom: it.uom,
           price: it.price,
           taxRate: it.taxRate,
+          taxName: it.taxName || 'GST',
           taxAmount: it.taxAmount,
           total: it.total
         })),
